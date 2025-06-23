@@ -1,0 +1,60 @@
+[gd_scene load_steps=7 format=3 uid="uid://dw1yl7o5iawhf"]
+
+[ext_resource type="Script" uid="uid://6s4ep2pgrwoe" path="res://Scripts/spawner.gd" id="1_10p64"]
+[ext_resource type="Texture2D" uid="uid://dukbghjyn71h3" path="res://Free/Main Characters/Virtual Guy/Fall (32x32).png" id="2_eb5wi"]
+[ext_resource type="Texture2D" uid="uid://d3llh831ngo4v" path="res://Free/Main Characters/Virtual Guy/Jump en(32x32).png" id="3_hfd4f"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_q7hdd"]
+
+[sub_resource type="Animation" id="Animation_serw2"]
+resource_name = "spawn"
+length = 15.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(9.3, 10, 10.8, 11.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_hfd4f"), ExtResource("2_eb5wi"), ExtResource("3_hfd4f"), ExtResource("2_eb5wi")]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(10),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"fire"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nq7ie"]
+_data = {
+&"spawn": SubResource("Animation_serw2")
+}
+
+[node name="spawner" type="StaticBody2D"]
+script = ExtResource("1_10p64")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_eb5wi")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 3.625)
+shape = SubResource("CapsuleShape2D_q7hdd")
+
+[node name="spawning point" type="Marker2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_nq7ie")
+}
